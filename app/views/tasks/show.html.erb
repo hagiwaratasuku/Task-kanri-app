@@ -1,0 +1,40 @@
+<% provide(:title, @user.name) %>
+
+<h1>タスク詳細</h1>
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th class="active col-md-2">ID</th>
+          <td class="col-md-10"><%= @task.id %></td>
+        </tr>
+        <tr>
+          <th class="active col-md-2">名称</th>
+          <th><%= @task.name %></th>
+        </tr>
+        <tr>
+          <th class="active">詳細</th>
+          <th><%= @task.description %></th>
+        </tr>
+          <tr>
+          <th class="active">作成日</th>
+          <th><%= l(@task.created_at, format: :long) %></th>
+        </tr>
+        <tr>
+          <th class="active">更新日</th>
+          <th><%= l(@task.updated_at, format: :long) %></th>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div>
+      <%= link_to "編集", edit_user_task_path(@user,@task), class: "btn btn-lg btn-success" %>
+      <%= link_to "削除", user_tasks_path(@user,@task), method: :delete,
+      data: { confirm: "#{@task.name}を削除します。よろしいですか？" },
+      class: "btn btn-lg btn-danger" %>
+    </div>
+  </div>
+</div>
+
