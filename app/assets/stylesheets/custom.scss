@@ -82,8 +82,10 @@ li .header-list {
   font-weight: 900;
   &:hover {
     color: silver !important;
+    background-color: silver;
   }
 }
+
 
 #dropdown-title {
   background-color: teal;
@@ -93,7 +95,8 @@ li .dropdown-header {
   background-color: rgba(200, 200, 200, 0.5);
   font-weight: 900;
 }
-  
+
+
 
 
 
