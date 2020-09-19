@@ -1,11 +1,11 @@
 class TasksController < ApplicationController
-  before_action :set_user, only: [:index, :show, :edit, :update, :destroy]
+  before_action :set_user
   before_action :set_task, only: :destroy
   before_action :logged_in_user, only: [:index, :show, :edit, :update, :destroy]
   before_action :admin_user, only: :destroy
   
   def index
-    @tasks = @user.tasks
+    @tasks = @user.tasks.order(created_at: :desc)
    
   end
   
@@ -18,19 +18,30 @@ class TasksController < ApplicationController
   end
   
   def create
+    @task = @user.tasks.build(task_params)
+    if @task.save
+      flash[:success] = "タスクを新規作成しました。"
+      redirect_to user_tasks_url @user
+    else
+      render :new
+    end
   end
   
   def edit
   end
   
   def destroy
-    
     @task.destroy
     flash[:success] = "#{@task.name}のデータを削除しました"
     redirect_to user_tasks_url @user
   end
   
   private
+  
+    def task_params
+      params.require(:task).permit(:name, :description)
+    end
+    
     def set_user
       @user = User.find(params[:user_id])
     end
