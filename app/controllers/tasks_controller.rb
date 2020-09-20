@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_user
-  before_action :set_task, only: :destroy
+  before_action :set_task, only: [:destroy, :edit,]
   before_action :logged_in_user, only: [:index, :show, :edit, :update, :destroy]
   before_action :admin_user, only: :destroy
   
@@ -28,6 +28,17 @@ class TasksController < ApplicationController
   end
   
   def edit
+    @task = Task.find(params[:id])
+  end
+  
+  def update
+    @task = Task.find(params[:id])
+    if @task.update_attributes(task_params)
+      flash[:success] = "タスクを更新しました。"
+      redirect_to user_tasks_url @user
+    else
+      render :edit
+    end
   end
   
   def destroy
